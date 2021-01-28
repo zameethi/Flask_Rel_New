@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:background-color="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.css">
+</head>
+<body>
+
+
+
+<div class="row no-gutters">
+    <div class="col-12 d-flex">
+        <div class="table-responsive">
+            <table class="table table-sm " style="border-right: 1px solid #ddd;">
+                <thead>
+                <tr class="table-secondary">
+                    <th style="width: 75px;">Alterou?</th>
+                    <th>SKU</th>
+                    <th>Descriçao</th>
+                    <th>Voltagem</th>
+                    <th>Fornecedor</th>
+                    <th>Situação</th>
+                    <th>Especie</th>
+                    {% for col in range(0,1) %}
+                    <th class="text-center" style="width: 70px;min-width: 70px">SPI</th>
+                    <th class="text-center" style="width: 70px;min-width: 70px">MG</th>
+                    <th class="text-center" style="width: 70px;min-width: 70px">SUL</th>
+                    <th class="text-center" style="width: 70px;min-width: 70px">GDE SP</th>
+                    <th class="text-center" style="width: 70px;min-width: 70px">NE</th>
+                    <th class="text-center" style="width: 70px;min-width: 70px">CO/N</th>
+                    <th class="text-center" style="width: 70px;min-width: 70px">RJ/ES</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for skus in sku %}
+                    <tr style="line-height: 14px;">
+                        <td class="align-middle" style="border-top: 1px solid #dee2e6;"> </td>
+                        <td class="align-middle" style="border-top: 1px solid #dee2e6;">{{ skus.CODMERCADORIA }}</td>
+                        <td class="align-middle d-inline-block text-truncate"
+                            style="max-width: 18rem;">{{ skus.DESCMERCADORIA }}</td>
+                        <td class="align-middle text-center text-truncate"
+                            style="max-width: 15rem">{{ skus.VOLTAGEM }}</td>
+                        <td class="align-middle" style="max-width: 8rem;">{{ skus.DESCMARCA }}</td>
+                        <td class="align-middle text-center text-truncate"
+                            style="max-width: 8rem">{{ skus.STATUS }}</td>
+                        <td class="align-middle d-inline-block text-truncate"
+                            style="max-width: 10rem;">{{ skus.DESCESPECIE }}</td>
+
+                            {% for items in mercadoria.mercadoria_0 %}
+                                {% if items.CODMERCADORIA == skus.CODMERCADORIA %}
+                                    {% if items.SPI %}<td class="align-middle text-center font-weight-bold{% if items.SPI == 3 %} bg-warning{% else %} bg-info{% endif %}" style="max-width: 18rem;">{{ items.SPI }}</td>{% else %}<td class="align-middle text-center font-weight-bold" style="max-width: 18rem;background-color: lightgrey"> </td>{% endif %}
+                                    {% if items.MG %}<td class="align-middle text-center font-weight-bold{% if items.MG == 3 %} bg-warning{% else %} bg-info{% endif %}" style="max-width: 18rem;">{{ items.MG }}</td>{% else %}<td class="align-middle text-center font-weight-bold" style="max-width: 18rem;background-color: lightgrey"> </td>{% endif %}
+                                    {% if items.SUL %}<td class="align-middle text-center font-weight-bold{% if items.SUL == 3 %} bg-warning{% else %} bg-info{% endif %}" style="max-width: 18rem;">{{ items.SUL }}</td>{% else %}<td class="align-middle text-center font-weight-bold" style="max-width: 18rem;background-color: lightgrey"> </td>{% endif %}
+                                    {% if items.GDE_SP %}<td class="align-middle text-center font-weight-bold{% if items.GDE_SP == 3 %} bg-warning{% else %} bg-info{% endif %}" style="max-width: 18rem;">{{ items.GDE_SP }}</td>{% else %}<td class="align-middle text-center font-weight-bold" style="max-width: 18rem;background-color: lightgrey"> </td>{% endif %}
+                                    {% if items.NE %}<td class="align-middle text-center font-weight-bold{% if items.NE == 3 %} bg-warning{% else %} bg-info{% endif %}" style="max-width: 18rem;">{{ items.NE }}</td>{% else %}<td class="align-middle text-center font-weight-bold" style="max-width: 18rem;background-color: lightgrey"> </td>{% endif %}
+                                    {% if items.CO_N %}<td class="align-middle text-center font-weight-bold{% if items.CO_N == 3 %} bg-warning{% else %} bg-info{% endif %}" style="max-width: 18rem;">{{ items.CO_N }}</td>{% else %}<td class="align-middle text-center font-weight-bold" style="max-width: 18rem;background-color: lightgrey"> </td>{% endif %}
+                                    {% if items.RJ_ES %}<td class="align-middle text-center font-weight-bold{% if items.RJ_ES == 3 %} bg-warning{% else %} bg-info{% endif %}" style="max-width: 18rem;">{{ items.RJ_ES }}</td>{% else %}<td class="align-middle text-center font-weight-bold" style="max-width: 18rem;background-color: lightgrey"> </td>{% endif %}
+                                    {% break %}
+                                {% endif %}
+                            {% endfor %}
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

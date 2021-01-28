@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<style>
+body{
+  margin:0;
+  padding:0;
+}
+.container {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 25px;
+  text-align-last: center;
+}
+.jumbotron h1{
+  font-size: 27px;
+  color:#18bc9c;
+}
+.jumbotron h4{
+  font-size: 20px;
+}
+.jumbotron h5{
+  font-size: 18px;
+  color:#18bc9c;
+}
+.row{
+  background: #fafafa;
+
+}
+.col-sm-2 h5 {
+  margin-top: 90px;
+}
+
+.col-sm-2 {
+  padding: 10px;
+  border-radius: 4px;
+  height: 180px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 1px #000;
+  border: 1px solid skyblue;
+}
+
+.xmas_back{
+   background: radial-gradient(circle at center, skyblue 10%,  #fff 100%);
+}
+
+.close1 {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  font-weight: bold;
+  font-family: sans-serif;
+  cursor: pointer;
+  color: #26a100;
+}
+
+/* ======= PreLoader CSS Start  ========*/
+
+/*
+/*=== mask === */
+/*-- This code is for mask over all web content which will be
+fade out when your webpage get loaded.
+ --*/
+#mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* you can change color of mask here*/
+  background: #f3f3f3;
+  z-index: 99;
+  /* makes sure it stays on top */
+}
+
+/*=== extra preloading text=== */
+/** this code can be use for adding loading text under preloader */
+#loading_text {
+  display: block;
+  position: absolute;
+  font-family: sans-serif,arial;
+  top: 50%;
+  left: 50%;
+  height: 50px;
+  width: 50px;
+  margin: 50px 0 0 -25px;
+  padding: 2px 0;
+  align-content: center;
+}
+/**===== nest3 =====*/
+#nest3 {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 50px;
+  width: 50px;
+  margin: -25px 0 0 -25px;
+  border: 2px solid transparent;
+  border-top-color: #26a100;
+  box-shadow: 0 0 5px skyblue;
+  border-radius: 50%;
+  -webkit-animation: spin9 1.5s ease infinite;
+          animation: spin9 1.5s ease infinite;
+}
+
+#nest3:before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  bottom: 7px;
+  left: 7px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  border-top-color: #26a100;
+  box-shadow: 0 0 5px skyblue;
+  -webkit-animation: spin9_x 1s linear infinite;
+          animation: spin9_x 1s linear infinite;
+}
+
+#nest3:after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  bottom: 15px;
+  left: 15px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  border-top-color: #26a100;
+  box-shadow: 0 0 5px skyblue;
+  -webkit-animation: spin9 1.5s linear infinite;
+          animation: spin9 1.5s linear infinite;
+}
+
+@-webkit-keyframes spin9 {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+@keyframes spin9 {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+@-webkit-keyframes spin9_x {
+  0% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+  }
+  100% {
+    -webkit-transform: rotateX(360deg);
+            transform: rotateX(360deg);
+  }
+}
+@keyframes spin9_x {
+  0% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+  }
+  100% {
+    -webkit-transform: rotateX(360deg);
+            transform: rotateX(360deg);
+    -webkit-transform: rotateX(360deg);
+            transform: rotateX(360deg);
+  }
+}
+
+/** END of nest3 */
+
+btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+[type=button], [type=reset], [type=submit], button {
+    -webkit-appearance: button;
+}
+a {
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+user agent stylesheet
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+</style>
+<body>
+<div class="col-sm-2 container jumbotron"><h1>Planilhas Criadas</h1>
+<div class="container h5"><a class="btn btn-primary text-white" type="button" style="background-color: rgb(43,87,52);width: 18em" href="{{ url_for('downloadPR') }}">Perfil-Região</a></div>
+    <br>
+</div>
+</div>
+</body>
+</html>

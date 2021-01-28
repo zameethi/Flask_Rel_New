@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>campo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.css">
+</head>
+
+<body class="m-2">
+    <div class="border rounded">
+        <div class="row no-gutters">
+            <div class="col">
+                <div class="input-group" style="width: 300px;margin-left: 10px;margin-top: 103px;">
+                    <div class="input-group-prepend"><span class="input-group-text">Seçao</span></div><input id='num_secao'class="form-control" type="text" name="num_secao" value="{{ num_secao }}">
+                    <div class="input-group-append"><button class="btn btn-primary" type="button" onclick="" id="botao">Atualizar</button></div>
+                </div>
+            </div>
+            <div class="col-auto d-flex justify-content-end align-items-end">
+                <div class="table-responsive text-center" style="width: 550px;min-width: 550px;">
+                    <table class="table table-sm" style="border-left: 1px solid #ddd;">
+                        <thead>
+                            <tr>
+                                <th style="border: hidden;"></th>
+                                <th class="table-secondary text-center" colspan="5">CONVENVIONAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="border: hidden;"></td>
+                                <th class="table-secondary" colspan="5">{{ perfil }}</th>
+                            </tr>
+                            <tr>
+                                <td style="border: hidden;"></td>
+                                <th class="table-secondary text-center" colspan="5">CO/N</th>
+                            </tr>
+                            <tr class="table-secondary">
+                                <th class="border rounded-0">Qte SKU:</th>
+                                <th class="text-center" style="width: 90px;">P&nbsp;</th>
+                                <th class="text-center" style="width: 90px;">PP</th>
+                                <th class="text-center" style="width: 90px;">M&nbsp;</th>
+                                <th class="text-center" style="width: 90px;">G&nbsp;</th>
+                                <th class="text-center" style="width: 90px;">GG</th>
+                            </tr>
+                            <tr>
+                                <td class="border rounded-0">Obrigatório</td>
+                                <td>{{ total_obr.PP }}</td>
+                                <td>{{ total_obr.P }}</td>
+                                <td>{{ total_obr.M }}</td>
+                                <td>{{ total_obr.G }}</td>
+                                <td>{{ total_obr.GG }}</td>
+                            </tr>
+                            <tr>
+                                <td class="border rounded-0">Sugestão</td>
+                                    <td>{{ total_sug.PP }}</td>
+                                    <td>{{ total_sug.P }}</td>
+                                    <td>{{ total_sug.M }}</td>
+                                    <td>{{ total_sug.G }}</td>
+                                    <td>{{ total_sug.GG }}</td>
+                            </tr>
+                            <tr>
+                                <td class="border rounded-0">Total</td>
+                                <td class="{% if content_secao.0.0|int > (total_obr.PP|int + total_sug.PP|int) %}">{{ total_obr.PP|int + total_sug.PP|int }}{% else %} bg-danger font-weight-bold">{{ total_obr.PP|int + total_sug.PP|int }} {% endif %}</td>
+                                <td class="{% if content_secao.0.0|int > (total_obr.P|int + total_sug.P|int) %}">{{ total_obr.P|int + total_sug.P|int }}{% else %} bg-danger font-weight-bold">{{ total_obr.P|int + total_sug.P|int }} {% endif %}</td>
+                                <td class="{% if content_secao.0.0|int > (total_obr.M|int + total_sug.M|int) %}">{{ total_obr.M|int + total_sug.M|int }}{% else %} bg-danger font-weight-bold">{{ total_obr.M|int + total_sug.P|int }} {% endif %}</td>
+                                <td class="{% if content_secao.0.0|int > (total_obr.G|int + total_sug.G|int) %}">{{ total_obr.G|int + total_sug.G|int }}{% else %} bg-danger font-weight-bold">{{ total_obr.G|int + total_sug.P|int }} {% endif %}</td>
+                                <td class="{% if content_secao.0.0|int > (total_obr.GG|int + total_sug.GG|int) %}">{{ total_obr.GG|int + total_sug.GG|int }}{% else %} bg-danger font-weight-bold">{{ total_obr.GG|int + total_sug.P|int }} {% endif %}</td>
+                            </tr>
+                            <tr class="table-info">
+                                <td class="border rounded-0" style="border-bottom: 1px solid #86cfda;};">Ideal</td>
+                                {% for itens in content_secao %}
+                                    <td>{{ itens.OBRIGATORIO }}</td>
+                                {% endfor %}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row no-gutters">
+            <div class="col-12 d-flex">
+                <div class="table-responsive">
+                    <table class="table table-sm " style="border-right: 1px solid #ddd;">
+                        <thead>
+                            <tr class="table-secondary">
+                                <th style="width: 75px;">Alterou?</th>
+                                <th>SKU</th>
+                                <th>Descriçao</th>
+                                <th>Voltagem</th>
+                                <th>Fornecedor</th>
+                                <th>Situação</th>
+                                <th>Especie</th>
+                                <th class="text-center" style="width: 90px;min-width: 90px">P</th>
+                                <th class="text-center" style="width: 90px;min-width: 90px">PP</th>
+                                <th class="text-center" style="width: 90px;min-width: 90px">M</th>
+                                <th class="text-center" style="width: 90px;min-width: 90px">G</th>
+                                <th class="text-center" style="width: 90px;min-width: 90px">GG</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for itens in content %}
+                            <tr style="line-height: 14px;">
+                                <td class="align-middle" style="border-top: 1px solid #dee2e6;">Não</td>
+                                <td class="align-middle" style="border-top: 1px solid #dee2e6;">{{ itens.CODMERCADORIA }}</td>
+                                <td class="align-middle d-inline-block text-truncate" style="max-width: 18rem;">{{ itens.DESCMERCADORIA }}</td>
+                                <td class="align-middle text-center text-truncate" style="max-width: 15rem">{{ itens.VOLTAGEM }}</td>
+                                <td class="align-middle" style="max-width: 8rem;">{{ itens.DESCMARCA }}</td>
+                                <td class="align-middle text-center text-truncate" style="max-width: 8rem">{{ itens.STATUS }}</td>
+                                <td class="align-middle d-inline-block text-truncate" style="max-width: 10rem;">{{ itens.DESCTAMANHO }}</td>
+                                <td class="align-middle text-center font-weight-bold"{% if '-PP-' in itens.DESCTAMANHO %}{% if itens.PRIORIDADE == 3 %} style="background-color: gold ">{{ itens.PRIORIDADE }}{% else %} style="background-color: #86cfda">{{ itens.PRIORIDADE }}{% endif %}{% else %} style="background-color: lightgrey"> {% endif %}</td>
+                                <td class="align-middle text-center font-weight-bold"{% if '-P-' in itens.DESCTAMANHO %}{% if itens.PRIORIDADE == 3 %} style="background-color: gold ">{{ itens.PRIORIDADE }}{% else %} style="background-color: #86cfda">{{ itens.PRIORIDADE }}{% endif %}{% else %} style="background-color: lightgrey"> {% endif %}</td>
+                                <td class="align-middle text-center font-weight-bold"{% if '-M-' in itens.DESCTAMANHO %}{% if itens.PRIORIDADE == 3 %} style="background-color: gold ">{{ itens.PRIORIDADE }}{% else %} style="background-color: #86cfda">{{ itens.PRIORIDADE }}{% endif %}{% else %} style="background-color: lightgrey"> {% endif %}</td>
+                                <td class="align-middle text-center font-weight-bold"{% if '-G-' in itens.DESCTAMANHO %}{% if itens.PRIORIDADE == 3 %} style="background-color: gold ">{{ itens.PRIORIDADE }}{% else %} style="background-color: #86cfda">{{ itens.PRIORIDADE }}{% endif %}{% else %} style="background-color: lightgrey"> {% endif %}</td>
+                                <td class="align-middle text-center font-weight-bold"{% if '-GG-' in itens.DESCTAMANHO %}{% if itens.PRIORIDADE == 3 %} style="background-color: gold ">{{ itens.PRIORIDADE }}{% else %} style="background-color: #86cfda">{{ itens.PRIORIDADE }}{% endif %}{% else %} style="background-color: lightgrey"> {% endif %}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+</body>
+<script>
+    document.getElementById("botao").onclick = function () {
+        location.href = "/" + document.getElementById('num_secao').value;
+    };
+
+</script>
+</html>
