@@ -1004,5 +1004,5 @@ if __name__ == '__main__':
 
     #app.run(host='0.0.0.0', port=80, debug=True, threaded=True)
     #run_server()
-    serve(app, host='0.0.0.0', port=80, log_socket_errors=True, threads=4)
+    serve(app, host='0.0.0.0', port=80, log_socket_errors=True, threads=6)
     
