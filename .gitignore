@@ -177,3 +177,6 @@ apps/funcs.zip
 apps/ideal_old.csv
 media/sortimento/*.csv
 *.csv
+media/cruzada/Cruzada*
+start-server.bat
+media/sortimento/SortimSortemp*
