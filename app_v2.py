@@ -67,7 +67,7 @@ class Secoes_form(FlaskForm):
 
 def resultado():
     file = gerar_arquivos()
-    for root, dirs, files in os.walk("processos\\sql_sortim_sortemp", topdown=False):
+    for root, _, files in os.walk("processos\\sql_sortim_sortemp", topdown=False):
         for name in files:
             result = file.query(os.path.abspath(os.path.join(root, name)), Path(name).stem,
                                 os.path.relpath('media/sortimento'))
@@ -126,7 +126,7 @@ def home():
     sortimento, sortimento_arquivo, sort_criado = '', '', ''
     cruzada, cruzada_arquivo, cruzada_criado = '', '', ''
     cluster, cluster_arquivo, cluster_criado = '', '', ''
-    for root, dirs, files in os.walk("media/sortimento/", topdown=False):
+    for root, _, files in os.walk("media/sortimento/", topdown=False):
         for name in files:
             if name.endswith('.zip'):
                 sortimento_arquivo = os.path.abspath(os.path.join(root, name))
@@ -206,7 +206,7 @@ def home():
 @app.route('/sortimsortemp')
 def sortimsortemp():
     global a
-    for root, dirs, files in os.walk("media\\sortimento", topdown=False):
+    for root, _, files in os.walk("media\\sortimento", topdown=False):
         for name in files:
             os.remove(os.path.abspath(os.path.join(root, name)))
     ftmp = open(os.path.abspath('media\\sortimento\\sortimsortemp.tmp'), 'w+')
@@ -247,13 +247,13 @@ def cruzada():
     if secao:
         secao = form.secao.data
         file = gerar_arquivos()
-        for root, dirs, files in os.walk("media\\cruzada", topdown=False):
+        for root, _, files in os.walk("media\\cruzada", topdown=False):
             for name in files:
                 os.remove(os.path.abspath(os.path.join(root, name)))
         ftmp = open(os.path.abspath('media\\cruzada\\cruzada.tmp'), 'w+')
         ftmp.close()
 
-        result = file.query(sql.format(secao_lista, secao_lista), 'Base_cruzada', os.path.relpath('media/cruzada'),
+        file.query(sql.format(secao_lista, secao_lista), 'Base_cruzada', os.path.relpath('media/cruzada'),
                             tipo=1)
 
         file.zippar(str('Cruzada-{}'.format(secao_lista.replace(', ','-'))), os.path.relpath('media/cruzada'))
@@ -278,7 +278,7 @@ def cluster():
     except:
         pass
     file = gerar_arquivos()
-    for root, dirs, files in os.walk("media\\cluster", topdown=False):
+    for root, _, files in os.walk("media\\cluster", topdown=False):
         for name in files:
             print(name)
             os.remove(os.path.abspath(os.path.join(root, name)))
@@ -287,7 +287,7 @@ def cluster():
 
     for root, dirs, files in os.walk("processos\\sql_cluster_catalogo", topdown=False):
         for name in files:
-            result = file.query(os.path.abspath(os.path.join(root, name)), Path(name).stem,
+            file.query(os.path.abspath(os.path.join(root, name)), Path(name).stem,
                                 os.path.relpath('media/cluster'))
         file.zippar('Cluster_CatalagoVV+', os.path.relpath('media/cluster'))
     os.remove(os.path.abspath('media\\cluster\\cluster.tmp'))
@@ -351,7 +351,7 @@ def gerar():
         return render_template('loading_new.html', atual=atual, progresso=progresso)
 
     elif status == 2:
-        for root, dirs, files in os.walk(f'apps/db/Arquivos{id}'):
+        for _, _, files in os.walk(f'apps/db/Arquivos{id}'):
             for name in files:
                 if name.endswith('zip'):
                     return render_template('loading_finish.html')
@@ -376,7 +376,7 @@ def gerar():
 
 @app.route('/downloadPRT', methods=['GET', 'POST'])
 def downloadPRT():
-    for root, dirs, files in os.walk('apps/db/Arquivos1'):
+    for root, _, files in os.walk('apps/db/Arquivos1'):
         for name in files:
             if name.endswith('zip'):
                 print(os.path.abspath(os.path.join(root, name)))
@@ -433,7 +433,7 @@ def gerar1():
 
 
     elif status == 2:
-        for root, dirs, files in os.walk(f'apps/db/Arquivos{id}'):
+        for _, _, files in os.walk(f'apps/db/Arquivos{id}'):
             for name in files:
                 if name.endswith('zip'):
                     return render_template('loading_finish_1.html')
