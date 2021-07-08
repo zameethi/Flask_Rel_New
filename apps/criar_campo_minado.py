@@ -1,7 +1,8 @@
 import os
 import zipfile
 from datetime import datetime
-import xlwings as xw
+import openpyxl as xw
+from openpyxl.utils.dataframe import dataframe_to_rows
 import pandas as pd
 import sqlite3
 from vars_pandas import *
@@ -24,9 +25,8 @@ def zippar(arqs, origem):
 
 
 def processar(id, concatenado, secoes, tabela, ordem, template):
-    con = sqlite3.connect('apps/db/sortimento.db')
+    con = sqlite3.connect(os.path.abspath('apps/db/sortimento.db'))
     print(f'processando! secoes {secoes}')
-    #secoes = [66,16,91]
 
     path = os.path.abspath(f'apps/db/Arquivos{id}')
     start = datetime.now()
@@ -189,14 +189,14 @@ def processar(id, concatenado, secoes, tabela, ordem, template):
                             except:
                                 df1.iloc[data.Index, x] = int(item[2])
             
-
+        print('montando df!')
         df1.loc[df1.index.max() + 1] = None
         df1.iloc[df1.index.max(), 0] = f'=IF(AND(B{n_rows}="",IFERROR(IF(VLOOKUP(B{n_rows},{a}!B:H,7,0)=H{n_rows},"Não","Sim"),1)=1),"",IFERROR(IF(VLOOKUP(B{n_rows},{a}!B:H,7,0)=H{n_rows},"Não","Sim"),"Novo Produto"))'
         df1.iloc[df1.index.max(), 1] = 'Total Geral'
 
 
         sortim = pd.read_sql(f"select * from sortim where ((codsortimento in (2021,2022,2023,2024,2025,2078)) or (codsortimento >= 201 and codsortimento <=900)) and CODSECAO = {secao};", con)
-        
+        print('Sql sortim!')
 
         new_cols = ['PERFIL', 'BANDEIRA', 'LOCAL_NOVO', 'LOCAL', 'TAMANHO', 'REGIÃO', 'REGIAO 2', 'CONCATENADO',
                     'CONCATENADO 2', 'CONCATENADO 3', 'CONCATENADO 4', 'CONCATENADO 5', 'CONCATENADO 6', 'CONCATENADO 7']
@@ -267,51 +267,58 @@ def processar(id, concatenado, secoes, tabela, ordem, template):
         sortim = sortim[colorder]
     
         n_ideal = listar_ideal()
-
-        app = xw.App(visible=True)
-        xl = app.books.open(os.path.abspath(f'apps/db/{template}.xlsm'))
-
-        w1 = xl.sheets[0]
-        w2 = xl.sheets[1]
-        w3 = xl.sheets[2]
-        w4 = xl.sheets[4]
-
-        df1.to_csv(f'{id}.csv')
-
-        final = pd.read_csv(f'{id}.csv')
-        final = final[tabela]		
         
 
-        w1.range('A17').options(index=False, header=False).value = df1
+        print('iniciando excel!')
+        xl = xw.load_workbook(os.path.abspath(f'apps/db/{template}.xlsm'), keep_vba=True)
 
+        sheets = xl.sheetnames
+
+        w1 = xl[sheets[0]]
+        w2 = xl[sheets[1]]
+        w3 = xl[sheets[2]]
+        w4 = xl[sheets[4]]
+       
         df1.iloc[df1.index.max(), 0] = None
         df1.iloc[df1.index.max(), 1] = None
 
-        w2.range('A17').options(index=False, header=False).value = df1
-        w3.range('A2').options(index=False, header=False).value = sortemp
-        w4.range('A2').options(index=False, header=False).value = sortim
+        print('dataframete to rows df1!')
+        df1 = dataframe_to_rows(df1, index=False, header=False)
+        for n_row, linhas in enumerate(df1, start=17):
+            for n_cols,cols in enumerate(linhas, start=1):
+                w1.cell(row=n_row, column=n_cols).value = cols
+                w2.cell(row=n_row, column=n_cols).value = cols
+
+        print('dataframete to rows sortemp!')
+        sortemp = dataframe_to_rows(sortemp, index=False, header=False)
+        for n_row, linhas in enumerate(sortemp, start=2):
+            for n_cols,cols in enumerate(linhas, start=1):
+                w3.cell(row=n_row, column=n_cols).value = cols
+        
+        print('dataframete to rows sortim!')
+        sortim = dataframe_to_rows(sortim, index=False, header=False)
+        for n_row, linhas in enumerate(sortim, start=2):
+            for n_cols,cols in enumerate(linhas, start=1):
+                w4.cell(row=n_row, column=n_cols).value = cols
+
         if secao in n_ideal.keys():
             if template in ('Perfil_Tamanho','Perfil_Regiao'):
-                ide = 'L7'
+                ide = 7
             else:
-                ide = 'L8'
-            w1.range(f'{ide}').options(index=False, header=False).value = n_ideal[secao]
-            w2.range(f'{ide}').options(index=False, header=False).value = n_ideal[secao]
+                ide = 8
+ 
+            for cols, valor in enumerate(n_ideal[secao], start=12):
+                w1.cell(row=ide, column=n_cols).value = valor
+                w2.cell(row=ide, column=n_cols).value = valor
         
 
+        print('salvando!')
         xl.save(f'{path}/secao-{secao}_{file_name}.xlsm')
         xl.close()
-        app.quit()
-        try:
-            app.close
-        except:
-            pass
+        
 
         del df, df_all, df1, sortim, sortemp
-        # del df_all
-        # del df1
-        # del sortim
-        # del sortemp
+        gc.collect()
     
     
     con.execute(f"UPDATE PROCESSO SET processando = 2 where id = {id};")
@@ -331,4 +338,5 @@ def processar(id, concatenado, secoes, tabela, ordem, template):
     con.commit()
     con.close()
     print(f'Time:, {stop}')
+
     return True

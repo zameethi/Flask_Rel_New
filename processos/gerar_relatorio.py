@@ -38,7 +38,7 @@ class gerar_arquivos():
                 lista.append(k[0])
 
             if len(curs) >= 1:
-                txt = open(f'{origem}\\{file}' + str('.csv'), 'w+', encoding='UTF-8')
+                txt = open(f'{origem}/{file}' + str('.csv'), 'w+', encoding='UTF-8')
                 txt.write((','.join(lista) + '\n').replace(',', ';'))
 
 
@@ -59,7 +59,7 @@ class gerar_arquivos():
         return texto
 
     def zippar(self, arqs, origem):
-        rel_zip = zipfile.ZipFile(f'{origem}\\{arqs}.zip', 'w')
+        rel_zip = zipfile.ZipFile(f'{origem}/{arqs}.zip', 'w')
         print(arqs)
         for folder, subfolders, files in os.walk(f'{origem}'):
             for i, file in enumerate(files):

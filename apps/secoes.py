@@ -10,4 +10,4 @@ perfil_regiao = [7, ]
 
 bandeira_perfil_tamanho = [13]
 
-telefonia = [16, 91, 98, 146]
+telefonia = [98, 146, 16, 91]

@@ -171,7 +171,7 @@ apps/db/Arquivos*/*.xlsm
 apps/db/csv/*.csv
 
 # End of https://www.toptal.com/developers/gitignore/api/python,vim
-apps/db/Arquivos{id}
+
 apps/db/sortimento.db
 apps/funcs.zip
 apps/ideal_old.csv
