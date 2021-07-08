@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
 
-
+port = 5000
 app = Flask(__name__, template_folder='../../templates/',  static_folder=os.path.abspath('static'), static_url_path='/static')
 app.config['SECRET_KEY'] = 'a really really really really long secret key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sortimento.db'

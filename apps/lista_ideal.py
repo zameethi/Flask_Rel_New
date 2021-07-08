@@ -4,7 +4,7 @@ import os
 def listar_ideal():
     path = os.getcwd()
 
-    with open(f'{path}\\apps\\ideal.csv',mode='r',newline='') as f:
+    with open(f'{path}/apps/ideal.csv',mode='r',newline='') as f:
         csvfile = csv.reader(f, delimiter=';')
         dict_ideal = {}
         for row in csvfile:

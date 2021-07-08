@@ -1,1 +1,1 @@
-python.exe .\app_v2.py
+python.exe .\main.py
