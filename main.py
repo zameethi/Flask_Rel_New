@@ -52,11 +52,6 @@ def first_run():
         h.terminate()
     except:
         pass
-    try:
-        os.system("taskkill /f /im  EXCEL.exe")
-        
-    except:
-        pass
 
 class Secoes_form(FlaskForm):
     secao = SelectMultipleField('secao', [DataRequired()],
@@ -952,6 +947,7 @@ def disparar_5():
 def disparar_6():
     response7 = requests.get('http://localhost:{port}/gerar5')
 
+first_run()
 
 if __name__ == '__main__':
     a = multiprocessing.Process(target=resultado, daemon=True, name='resultado')
@@ -965,11 +961,6 @@ if __name__ == '__main__':
     job5 = scheduler.add_job(disparar_6, 'cron', day_of_week='*', hour=5, minute=40, start_date='2020-09-04')
     job3 = scheduler.add_job(disparar_3, 'cron', day_of_week='*', hour=4, minute=55, start_date='2020-09-04')
     scheduler.start()
-    try:
-        p.join()
-        p.terminate()
-    except:
-        pass
 
     #app.run(host='0.0.0.0', port=port, threaded=True)
     #uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
